@@ -27,7 +27,8 @@ func GetDeveloper(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	db, err := sql.Open("mymysql", "tcp:127.0.0.1:3306*webservice/root/")
+	// db, err := sql.Open("mymysql", "tcp:127.0.0.1:3306*webservice/root/")
+	db, err := sql.Open("sqlite3", "./developers.db")
 	if err != nil {
 		log.Fatal(err)
 	}

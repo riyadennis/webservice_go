@@ -6,7 +6,8 @@ import (
 
 	"github.com/mux"
 	"github.com/webservice_go/developers"
-	_ "github.com/ziutek/mymysql/godrv"
+	//if its mysql _ "github.com/ziutek/mymysql/godrv" //will import the package and execute its init function
+	_ "github.com/mattn/go-sqlite3" //will import the package and execute its init function
 )
 
 func main() {
