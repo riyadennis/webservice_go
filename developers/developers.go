@@ -40,26 +40,29 @@ func GetDeveloper(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	if rows.Next() {
+		var developer Developer
+		for rows.Next() {
+			if err := rows.Scan(&developer.FirstName,
+				&developer.LastName,
+				&developer.Age,
+				&developer.Language,
+				&developer.Floor,
+			); err != nil {
+				log.Fatal(err)
+			}
+			fmt.Println(developer)
+			developerString := fmt.Sprintf("Name : %s, Age: %d , Developing Language: %s, Floor: %d", developer.FirstName+
+				" "+developer.LastName,
+				developer.Age,
+				developer.Language,
+				developer.Floor,
+			)
+			createResponse(200, developerString, w)
 
-	var developer Developer
-	for rows.Next() {
-		if err := rows.Scan(&developer.FirstName,
-			&developer.LastName,
-			&developer.Age,
-			&developer.Language,
-			&developer.Floor,
-		); err != nil {
-			log.Fatal(err)
 		}
-		fmt.Println(developer)
-		developerString := fmt.Sprintf("Name : %s, Age: %d , Developing Language: %s, Floor: %d", developer.FirstName+
-			" "+developer.LastName,
-			developer.Age,
-			developer.Language,
-			developer.Floor,
-		)
-		createResponse(200, developerString, w)
-
+	} else {
+		createResponse(404, "Requested developer not found", w)
 	}
 
 	if err := rows.Err(); err != nil {
