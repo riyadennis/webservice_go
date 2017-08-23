@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/mux"
-	"github.com/webservice_go/developers"
+	"github.com/gorilla/mux"
+	"./developers"
 	//if its mysql _ "github.com/ziutek/mymysql/godrv" //will import the package and execute its init function
 	_ "github.com/mattn/go-sqlite3" //will import the package and execute its init function
 )

@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/mux"
+	"github.com/gorilla/mux"
 )
 
 type Developer struct {
@@ -27,8 +27,8 @@ func GetDeveloper(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
-	// db, err := sql.Open("mymysql", "tcp:127.0.0.1:3306*webservice/root/")
-	db, err := sql.Open("sqlite3", "./developers.db")
+	db, err := sql.Open("mymysql", "tcp:127.0.0.1:3306*webservice/root/")
+	//db, err := sql.Open("sqlite3", "./developers.db")
 	if err != nil {
 		log.Fatal(err)
 	}
