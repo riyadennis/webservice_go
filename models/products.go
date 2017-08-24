@@ -7,10 +7,12 @@ import (
 )
 
 type Product struct {
-	Sku              string `json:"sku"`
-	ShortDescription string `json:"short_description"`
-	Description      string `json:"description"`
-	AgeRestriction   int    `json:"age_restriction"`
+	Sku              int    `json:"sku"`
+	ShortDescription string    `json:"short_description"`
+	Description      string    `json:"description"`
+	AgeRestriction   int        `json:"age_restriction"`
+	IsAlcohol        bool        `json:"is_alcohol"`
+	OwnLabel         bool        `json:"own_label"`
 }
 
 type Response struct {
@@ -18,9 +20,33 @@ type Response struct {
 	Result string `json:"result"`
 }
 
+func SaveProduct(sku int,
+	shortDescription string,
+	description string,
+	ageRestriction int,
+	isAlcohol bool,
+	ownLabel bool) (Product) {
+	InitDB()
+	query := fmt.Sprintf("INSERT IGNORE INTO product(sku, age_restriction, short_description, description, is_alcohol, own_label) VALUES (%d , %d, '%s', '%s', %t, %t)",
+		sku, ageRestriction ,shortDescription, description, isAlcohol, ownLabel)
+	_, err := db.Exec(query)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return Product{
+		Sku:              sku,
+		ShortDescription: shortDescription,
+		Description:      description,
+		AgeRestriction:   ageRestriction,
+		IsAlcohol: isAlcohol,
+		OwnLabel:ownLabel,
+	}
+
+}
 func GetProduct(sku int) (Product) {
 	InitDB()
-	query := fmt.Sprintf("SELECT sku,age_restriction, short_description, description " +
+	query := fmt.Sprintf("SELECT sku,age_restriction, short_description, description "+
 		"FROM product WHERE sku = %d", sku)
 	row := db.QueryRow(query)
 

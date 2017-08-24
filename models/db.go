@@ -10,7 +10,7 @@ var db *sql.DB
 
 func InitDB() {
 	var err error
-	db, err = sql.Open("mysql", "root:@/api_products?charset=utf8")
+	db, err = sql.Open("mysql", "root:@/new_products?charset=utf8")
 	if err != nil {
 		log.Panic(err)
 	}
