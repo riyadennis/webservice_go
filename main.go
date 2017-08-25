@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"./models"
+	"./lib"
 )
 
 func main() {
@@ -12,4 +13,5 @@ func main() {
 	fmt.Println(newProduct)
 	product := models.GetProduct(sku)
 	fmt.Println(product)
+	lib.SendMessageSynchronously("Hello")
 }
