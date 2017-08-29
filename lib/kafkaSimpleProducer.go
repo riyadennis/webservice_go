@@ -24,11 +24,10 @@ func SendMessageSynchronously(msg string) {
 			log.Fatal(err)
 		}
 	}()
-	topic := "test"
-
+	topic := "products"
 	message := &sarama.ProducerMessage{
 		Topic:     topic,
-		Partition: -1,
+		Partition: 0,
 		Value:     sarama.StringEncoder(msg),
 	}
 	producer.SendMessage(message)

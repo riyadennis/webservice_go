@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"errors"
 	"encoding/json"
+	"bufio"
 )
 
 type item struct {
@@ -14,6 +15,7 @@ type item struct {
 	Url     string
 	Comment int `json:"num_comments"`
 }
+
 type Response struct {
 	Data struct {
 		Children []struct {
@@ -22,15 +24,23 @@ type Response struct {
 	}
 }
 
-func ReadFile(fileName string) {
-	file, err := os.Open(fileName)
+func ReadFileWriteToKafka(fileName string) string {
+	f, err := os.Open(fileName)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(file)
+	defer f.Close()
+	scanner := bufio.NewScanner(f)
+	i := 0;
+	for scanner.Scan() {
+		line := scanner.Text()
+		SendMessageSynchronously(line)
+		i++
+	}
+	return fmt.Sprintf("Line put to kafka $d", i)
 }
 
-func (i item) String() string{
+func (i item) String() string {
 	return fmt.Sprintf("Title %s Url %s ( Comments %d )", i.Title, i.Url, i.Comment)
 }
 
