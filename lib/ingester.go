@@ -37,7 +37,7 @@ func ReadFileWriteToKafka(fileName string) string {
 		SendMessageSynchronously(line)
 		i++
 	}
-	return fmt.Sprintf("Line put to kafka $d", i)
+	return fmt.Sprintf("Line put to kafka %d", i)
 }
 
 func (i item) String() string {
