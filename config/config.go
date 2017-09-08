@@ -21,6 +21,7 @@ type Db struct {
 type Kafka struct {
 	Host  string
 	Topic string
+	File  string
 }
 type Reddit struct {
 	Url string

@@ -6,5 +6,6 @@ db:
 kafka:
   host: localhost:9092
   topic: products
+  file: data/BigDataFile.dat
 reddit:
   url: https://www.reddit.com/r
