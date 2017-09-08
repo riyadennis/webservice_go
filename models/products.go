@@ -20,30 +20,16 @@ type Response struct {
 	Result string `json:"result"`
 }
 
-func Save(sku int,
-	shortDescription string,
-	description string,
-	ageRestriction int,
-	isAlcohol bool,
-	ownLabel bool) (Product) {
+func (p Product) Save() (Product) {
 	InitDB()
 	query := fmt.Sprintf("INSERT IGNORE INTO product(sku, age_restriction, short_description, description, "+
 		"is_alcohol, own_label) VALUES (%d , %d, '%s', '%s', %t, %t)",
-		sku, ageRestriction, shortDescription, description, isAlcohol, ownLabel)
+		p.Sku, p.AgeRestriction, p.ShortDescription, p.Description, p.IsAlcohol, p.OwnLabel)
 	_, err := db.Exec(query)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	return Product{
-		Sku:              sku,
-		ShortDescription: shortDescription,
-		Description:      description,
-		AgeRestriction:   ageRestriction,
-		IsAlcohol:        isAlcohol,
-		OwnLabel:         ownLabel,
-	}
-
+	return p
 }
 func Get(sku int) (Product) {
 	InitDB()
