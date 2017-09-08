@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
-	"./lib"
+	"./config"
 )
 
 func main() {
 	fmt.Println("Application starting to run")
-	file := "data/BigDataFile.dat"
-	fmt.Println(lib.ReadFileWriteToKafka(file))
+	fmt.Println("Reading the configs")
+	fmt.Println(config.GetConfig())
+	//file := "data/BigDataFile.dat"
+	//fmt.Println(lib.ReadFileWriteToKafka(file))
 }

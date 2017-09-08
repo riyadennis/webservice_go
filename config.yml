@@ -1,0 +1,10 @@
+db:
+  host: localhost
+  name: new_products
+  user: root
+  password:
+kafka:
+  host: localhost:9092
+  topic: products
+reddit:
+  url: https://www.reddit.com/r
