@@ -7,6 +7,6 @@ type User struct {
 	Role     string
 }
 
-func SaveUser(){
+func (u User) Save() {
 
 }
