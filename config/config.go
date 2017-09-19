@@ -10,6 +10,7 @@ type Config struct {
 	Db     Db
 	Kafka  Kafka
 	Reddit Reddit
+	Article Article
 }
 type Db struct {
 	Host     string
@@ -25,6 +26,12 @@ type Kafka struct {
 }
 type Reddit struct {
 	Url string
+}
+type Article struct {
+	Key        string
+	Url        string
+	Source     string
+	SortOption string
 }
 
 const defaultConfigPath = "/config.yml"

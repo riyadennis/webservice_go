@@ -15,13 +15,13 @@ type ArticleResponse struct {
 	Articles []models.Article `json:articles`
 }
 
-func ReadArticles(url string, body io.Reader) {
+func ReadArticles(url string, body io.Reader, key string) {
 	req, err := http.NewRequest("GET", url, body)
 	if err != nil {
 		panic(err)
 	}
 	req.Header.Set("Cache-Control", "no-cache")
-	req.Header.Set("X-Api-Key", "abd04ef3bdb24e8089494cbd128b0928")
+	req.Header.Set("X-Api-Key",key)
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
