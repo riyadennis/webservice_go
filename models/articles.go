@@ -57,7 +57,7 @@ const mapping = `{
 	}
 }`
 
-func (a Article) Save() {
+func (a *Article) Save() {
 	ctx := context.Background()
 	client, err := elastic.NewClient()
 	if err != nil {

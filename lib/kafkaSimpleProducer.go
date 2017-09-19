@@ -5,7 +5,11 @@ import (
 	"github.com/Shopify/sarama"
 )
 
-func SendMessageSynchronously(msg string) {
+type Message struct {
+	Jsonmsg string
+}
+
+func (msg *Message) Save() {
 	brokers := []string{"localhost:9092"}
 
 	config := sarama.NewConfig()
@@ -28,7 +32,7 @@ func SendMessageSynchronously(msg string) {
 	message := &sarama.ProducerMessage{
 		Topic:     topic,
 		Partition: 0,
-		Value:     sarama.StringEncoder(msg),
+		Value:     sarama.StringEncoder(msg.Jsonmsg),
 	}
 	producer.SendMessage(message)
 }

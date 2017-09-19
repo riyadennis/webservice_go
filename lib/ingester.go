@@ -32,9 +32,10 @@ func ReadFileWriteToKafka(fileName string) string {
 	defer f.Close()
 	scanner := bufio.NewScanner(f)
 	i := 0;
+	msg := new(Message)
 	for scanner.Scan() {
-		line := scanner.Text()
-		SendMessageSynchronously(line)
+		msg.Jsonmsg = scanner.Text()
+		msg.Save()
 		i++
 	}
 	return fmt.Sprintf("Line put to kafka %d", i)
