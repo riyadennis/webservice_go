@@ -7,36 +7,28 @@ import (
 )
 
 type Config struct {
-	Db     Db
-	Kafka  Kafka
-	Reddit Reddit
-	Article Article
+	Kafka   Kafka `yaml:kafka`
+	Reddit  Reddit `yaml:reddit`
+	Article Article `yaml: article`
 }
-type Db struct {
-	Host     string
-	Name     string
-	User     string
-	Password string
-}
-
 type Kafka struct {
-	Broker []string
-	Topic  string
-	File   string
+	Broker []string `yaml: broker`
+	Topic  string    `yaml: topic`
+	File   string    `yaml: file`
 }
 type Reddit struct {
-	Url string
+	Url string `yaml: url`
 }
 type Article struct {
-	Key        string
-	Url        string
-	Source     string
-	SortOption string
+	Key        string    `yaml: key`
+	Url        string    `yaml: url`
+	Source     string    `yaml: source`
+	SortOption string    `yaml: sort_option `
 }
 
-const defaultConfigPath = "/config.yml"
+const defaultConfigPath = "/src/github.com/webservice_go/config.yml"
 
-func GetConfig() (con *Config) {
+func GetConfig() (conf *Config) {
 	pwd, _ := os.Getwd()
 	file, err := os.Open(pwd + defaultConfigPath)
 	if err != nil {
@@ -50,7 +42,10 @@ func GetConfig() (con *Config) {
 	if err != nil {
 		panic(err)
 	}
-	con = new(Config)
-	yaml.Unmarshal(config, &con)
-	return con
+	conf = new(Config)
+	err = yaml.Unmarshal(config, &conf)
+	if err != nil {
+		panic(err)
+	}
+	return conf
 }

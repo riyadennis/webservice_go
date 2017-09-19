@@ -12,6 +12,6 @@ func main() {
 	config := config.GetConfig()
 	//pwd, _ := os.Getwd()
 	//fmt.Println(lib.ReadFileWriteToKafka(pwd + config.Kafka.File))
-
-	lib.ReadArticles(config.Article.Url+"?"+config.Article.Source+"&"+config.Article.SortOption, nil, config.Article.Key)
+	fmt.Println(config.Article.Key)
+	lib.ReadArticles(config.Article.Url+"?source="+config.Article.Source+"&sortBy=top", nil, config.Article.Key)
 }

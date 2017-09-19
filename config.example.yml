@@ -1,11 +1,11 @@
 kafka:
-  broker: [localhost:9092]
-  topic: products
-  file: changeme
+ broker: ["localhost:9092"]
+ topic: products
+ file: changeme
 reddit:
-  url: https://www.reddit.com/r
+ url: https://www.reddit.com/r
 article:
-  key: changeme
-  url: changeme
-  source: bbc-news
-  sortOption: top
+ key: changeme
+ url: changeme
+ source: bbc-news
+ sortOption: top

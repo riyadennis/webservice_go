@@ -3,9 +3,9 @@ package lib
 import (
 	"io"
 	"net/http"
-	"fmt"
 	"encoding/json"
 	"github.com/webservice_go/models"
+	"strings"
 )
 
 type ArticleResponse struct {
@@ -21,7 +21,7 @@ func ReadArticles(url string, body io.Reader, key string) {
 		panic(err)
 	}
 	req.Header.Set("Cache-Control", "no-cache")
-	req.Header.Set("X-Api-Key",key)
+	req.Header.Set("X-Api-Key", key)
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -33,10 +33,20 @@ func ReadArticles(url string, body io.Reader, key string) {
 	}
 	aResponse := new(ArticleResponse)
 	json.NewDecoder(resp.Body).Decode(&aResponse)
-	fmt.Println(aResponse.Articles)
-	for _, ar := range aResponse.Articles{
-		ar.Id = string(ar.Description)
+
+	for _, ar := range aResponse.Articles {
+		ar.Id = generateArticleId(ar.Title)
 		ar.Save()
 	}
 	defer resp.Body.Close()
+}
+func generateArticleId(desc string) (string) {
+	description := strings.Split(desc, " ")
+	des := description[0]
+	i :=1
+	for len(des) < 10 {
+		des += "_"+description[i]
+		i++
+	}
+	return strings.ToLower(des)
 }
