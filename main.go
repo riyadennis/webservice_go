@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/webservice_go/entities"
 	"github.com/webservice_go/lib"
 	"github.com/webservice_go/config"
 	"os"
@@ -14,5 +15,5 @@ func main() {
 	pwd, _ := os.Getwd()
 	fmt.Println(lib.ReadFileWriteToKafka(pwd + "/src/github.com/webservice_go/"+config.Kafka.File))
 	fmt.Println(config.Article.Key)
-	lib.ReadArticles(config.Article.Url+"?source="+config.Article.Source+"&sortBy=top", nil, config.Article.Key)
+	entities.ReadArticles(config.Article.Url+"?source="+config.Article.Source+"&sortBy=top", nil, config.Article.Key)
 }

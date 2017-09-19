@@ -1,10 +1,9 @@
-package lib
+package entities
 
 import (
 	"io"
 	"net/http"
 	"encoding/json"
-	"github.com/webservice_go/models"
 	"strings"
 )
 
@@ -12,7 +11,7 @@ type ArticleResponse struct {
 	Status   string `json:status`
 	Source   string `json:source`
 	SortBy   string `json:sortBy`
-	Articles []models.Article `json:articles`
+	Articles []Article `json:articles`
 }
 
 func ReadArticles(url string, body io.Reader, key string) {
