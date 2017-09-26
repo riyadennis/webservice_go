@@ -1,0 +1,9 @@
+package: github.com/webservice_go
+import:
+- package: github.com/Shopify/sarama
+  version: ~1.12.0
+- package: github.com/go-sql-driver/mysql
+  version: ~1.3.0
+- package: gopkg.in/olivere/elastic.v5
+  version: ~5.0.47
+- package: gopkg.in/yaml.v2
