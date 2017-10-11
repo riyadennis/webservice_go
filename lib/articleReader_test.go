@@ -11,3 +11,9 @@ func TestCreateRandomDigits(t *testing.T) {
 		assert.Fail(t, "Invalid random number generated")
 	}
 }
+
+func TestGenerateArticleId(t *testing.T) {
+	articleId, err := GenerateArticleId("Test error description")
+	assert.NoError(t, err)
+	assert.NotEmpty(t, articleId)
+}

@@ -9,6 +9,7 @@ import (
 	"time"
 	"math/rand"
 	"strconv"
+	"github.com/pkg/errors"
 )
 
 type Reader interface {
@@ -51,21 +52,29 @@ func (r ArticleReader) Read() (error) {
 }
 
 func SaveArticles(articles []entities.Article) {
+	var err error
 	for _, ar := range articles {
-		ar.Id = generateArticleId(ar.Title)
-		ar.Save()
+		ar.Id, err  = GenerateArticleId(ar.Title)
+		if err == nil {
+			ar.Save()
+		}
+
 	}
 }
-func generateArticleId(desc string) (string) {
+func GenerateArticleId(desc string) (string, error) {
 	description := strings.Split(desc, " ")
-	des := description[0]
-	i := 1
-	for len(des) < 10 {
-		des += "_" + description[i]
-		i++
+	if description[0] != "" {
+		des := description[0]
+		i := 1
+		for len(des) < 10 {
+			des += "_" + description[i]
+			i++
+		}
+		randomNum := CreateRandomDigits(10000, 99999)
+		return strings.ToLower(des) + "_" + strconv.Itoa(randomNum), nil
 	}
-	randomNum := CreateRandomDigits(10000, 99999)
-	return strings.ToLower(des) + "_" + strconv.Itoa(randomNum)
+	err := errors.New("Invalid description")
+	return "", err
 }
 
 func CreateRandomDigits(min, max int) int {
