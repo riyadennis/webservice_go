@@ -26,13 +26,11 @@ type Article struct {
 	SortOption string    `yaml: sort_option `
 }
 
-const defaultConfigPath = "/src/github.com/webservice_go/config.yml"
 
-func GetConfig() (conf *Config) {
-	pwd, _ := os.Getwd()
-	file, err := os.Open(pwd + defaultConfigPath)
+func GetConfig(path string) (*Config, error) {
+	file, err := os.Open(path)
 	if err != nil {
-		panic(err.Error())
+		return nil, err
 	}
 
 	if err != nil {
@@ -40,12 +38,12 @@ func GetConfig() (conf *Config) {
 	}
 	config, err := ioutil.ReadAll(file)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-	conf = new(Config)
+	conf := new(Config)
 	err = yaml.Unmarshal(config, &conf)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-	return conf
+	return conf, nil
 }

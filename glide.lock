@@ -1,6 +1,12 @@
-hash: 2bb948481402563e88a7c4cb3d5c524f67d88134feca66861ec680ea353b9dc3
-updated: 2017-09-26T20:22:48.164686575+01:00
+hash: 65caf70411a3329a1ad71eeabb3949cd2d7d37cdf222e7b4da01040072cb51ec
+updated: 2017-10-11T19:09:24.031284728+01:00
 imports:
+- name: github.com/DATA-DOG/godog
+  version: 4dc98b0e2b130c3c9d06868a050320e5b310d3e7
+  subpackages:
+  - cmd/godog
+  - colors
+  - gherkin
 - name: github.com/davecgh/go-spew
   version: a476722483882dd40b8111f0eb64e1d7f43f56e4
   subpackages:
@@ -29,8 +35,12 @@ imports:
   version: 1f30fe9094a513ce4c700b9a54458bbb0c96996c
 - name: github.com/Shopify/sarama
   version: c01858abb625b73a3af51d0798e4ad42c8147093
+- name: github.com/stretchr/testify
+  version: 232e8563676cd15c3a36ba5e675ad4312ac4cb11
+  subpackages:
+  - assert
 - name: gopkg.in/olivere/elastic.v5
-  version: 575dcf5070608328cb017251b40a8f06c5fa99b7
+  version: 2a08d39723b7f4df92b96e2dff891a60952714d6
   subpackages:
   - config
   - uritemplates

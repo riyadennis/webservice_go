@@ -57,21 +57,21 @@ const mapping = `{
 	}
 }`
 
-func (a *Article) Save() {
+func (a *Article) Save() (error){
 	ctx := context.Background()
 	client, err := elastic.NewClient()
 	if err != nil {
-		panic(err)
+		return err
 	}
 	exists, err := client.IndexExists("articles").Do(ctx)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	if !exists {
 		_, err := client.CreateIndex("articles").BodyString(mapping).Do(ctx)
 		if err != nil {
-			fmt.Errorf(err.Error())
+			return err
 		}
 	}
 	put, err := client.Index().
@@ -82,8 +82,9 @@ func (a *Article) Save() {
 		Do(ctx)
 	if err != nil {
 		// Handle error
-		panic(err)
+		return err
 	}
 
 	fmt.Printf("Indexed articles %s to index %s, type %s\n", put.Id, put.Index, put.Type)
+	return nil
 }
