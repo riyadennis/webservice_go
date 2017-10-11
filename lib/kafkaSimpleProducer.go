@@ -1,8 +1,8 @@
 package lib
 
 import (
-	"log"
 	"github.com/Shopify/sarama"
+	"log"
 )
 
 type Message struct {

@@ -1,13 +1,13 @@
 package lib
 
 import (
-	"os"
-	"log"
-	"fmt"
-	"net/http"
-	"errors"
-	"encoding/json"
 	"bufio"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"log"
+	"net/http"
+	"os"
 )
 
 type item struct {
@@ -31,7 +31,7 @@ func ReadFileWriteToKafka(fileName string) string {
 	}
 	defer f.Close()
 	scanner := bufio.NewScanner(f)
-	i := 0;
+	i := 0
 	msg := new(Message)
 	for scanner.Scan() {
 		msg.Jsonmsg = scanner.Text()

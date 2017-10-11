@@ -16,10 +16,10 @@ type Reader interface {
 	Read()
 }
 type ArticleResponse struct {
-	Status   string `json:status`
-	Source   string `json:source`
-	SortBy   string `json:sortBy`
-	Articles []entities.Article `json:articles`
+	Status   string
+	Source   string
+	SortBy   string
+	Articles []entities.Article
 }
 type ArticleReader struct {
 	Url  string
@@ -54,7 +54,7 @@ func (r ArticleReader) Read() (error) {
 func SaveArticles(articles []entities.Article) {
 	var err error
 	for _, ar := range articles {
-		ar.Id, err  = GenerateArticleId(ar.Title)
+		ar.Id, err = GenerateArticleId(ar.Title)
 		if err == nil {
 			ar.Save()
 		}
