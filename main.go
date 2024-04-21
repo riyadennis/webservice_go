@@ -2,27 +2,28 @@ package main
 
 import (
 	"fmt"
-	"github.com/webservice_go/lib"
-	"github.com/webservice_go/config"
-	"os"
 	"log"
+	"os"
+
+	"github.com/riyadennis/webservice_go/config"
+	"github.com/riyadennis/webservice_go/lib"
 )
 
 func main() {
 	fmt.Println("Application starting to run")
 	fmt.Println("Reading the configs")
 	p, _ := os.Getwd()
-	config, err := config.GetConfig(p + "/webservice_go/config.yml")
-	if err!=nil {
+	cfg, err := config.GetConfig(p + "/webservice_go/cfg.yml")
+	if err != nil {
 		log.Fatalf("Unable to load configuration : %s", err.Error())
 	}
 	pwd, _ := os.Getwd()
-	fmt.Println(lib.ReadFileWriteToKafka(pwd + "/webservice_go/"+config.Kafka.File))
+	fmt.Println(lib.ReadFileWriteToKafka(pwd + "/webservice_go/" + cfg.Kafka.File))
 
 	articleReader := lib.ArticleReader{
-		Url:config.Article.Url+"?source="+config.Article.Source+"&sortBy=top",
+		Url:  cfg.Article.Url + "?source=" + cfg.Article.Source + "&sortBy=top",
 		Body: nil,
-		Key: config.Article.Key,
+		Key:  cfg.Article.Key,
 	}
 	articleReader.Read()
 }

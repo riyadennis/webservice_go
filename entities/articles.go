@@ -1,21 +1,23 @@
 package entities
 
 import (
-	_ "github.com/go-sql-driver/mysql"
-	"time"
-	"context"
-	"gopkg.in/olivere/elastic.v5"
+	"errors"
 	"fmt"
+	"net/http"
+	"strings"
+	"time"
+
+	elastic "github.com/elastic/go-elasticsearch/v8"
 )
 
 type Article struct {
-	Id          string         `json:"Id"`
-	Author      string        `json:"author"`
-	Title       string        `json:"title"`
-	Description string        `json:"description"`
-	Url         string      `json:"url"`
-	UrlToImage  string      `json:"url_to_image"`
-	PublishedAt time.Time   `json:published_at`
+	Id          string    `json:"Id"`
+	Author      string    `json:"author"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Url         string    `json:"url"`
+	UrlToImage  string    `json:"url_to_image"`
+	PublishedAt time.Time `json:published_at`
 }
 
 type Response struct {
@@ -57,34 +59,31 @@ const mapping = `{
 	}
 }`
 
-func (a *Article) Save() (error){
-	ctx := context.Background()
-	client, err := elastic.NewClient()
-	if err != nil {
-		return err
-	}
-	exists, err := client.IndexExists("articles").Do(ctx)
+func (a *Article) Save() error {
+	client, err := elastic.NewDefaultClient()
 	if err != nil {
 		return err
 	}
 
-	if !exists {
-		_, err := client.CreateIndex("articles").BodyString(mapping).Do(ctx)
-		if err != nil {
-			return err
-		}
+	resp, err := client.Search(
+		client.Search.WithIndex("articles"),
+		client.Search.WithBody(strings.NewReader(mapping)),
+	)
+	if err != nil {
+		return err
 	}
-	put, err := client.Index().
-		Index("articles").
-		Type("properties").
-		Id(a.Id).
-		BodyJson(a).
-		Do(ctx)
+
+	if resp.StatusCode != http.StatusOK {
+		return errors.New("failed to connect to elasticsearch")
+	}
+
+	var responseBody []byte
+	_, err = resp.Body.Read(responseBody)
 	if err != nil {
 		// Handle error
 		return err
 	}
 
-	fmt.Printf("Indexed articles %s to index %s, type %s\n", put.Id, put.Index, put.Type)
+	fmt.Printf("Indexed articles %s to index %s, type %s\n", string(responseBody))
 	return nil
 }

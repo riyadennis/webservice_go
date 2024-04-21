@@ -1,15 +1,16 @@
 package lib
 
 import (
-	"io"
-	"net/http"
 	"encoding/json"
-	"strings"
-	"github.com/webservice_go/entities"
-	"time"
+	"errors"
+	"io"
 	"math/rand"
+	"net/http"
 	"strconv"
-	"github.com/pkg/errors"
+	"strings"
+	"time"
+
+	"github.com/riyadennis/webservice_go/entities"
 )
 
 type Reader interface {
@@ -27,7 +28,7 @@ type ArticleReader struct {
 	Key  string
 }
 
-func (r ArticleReader) Read() (error) {
+func (r ArticleReader) Read() error {
 	req, err := http.NewRequest("GET", r.Url, r.Body)
 	if err != nil {
 		return err

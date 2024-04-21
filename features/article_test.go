@@ -1,17 +1,18 @@
 package features
 
 import (
-	"github.com/DATA-DOG/godog"
-	"github.com/DATA-DOG/godog/gherkin"
 	"fmt"
+
+	"github.com/cucumber/godog"
+	"github.com/cucumber/godog/gherkin"
 )
 
 func iHaveAnArticleWithDetails(article *gherkin.DataTable) error {
-	for _, ar := range article.Rows{
-		for _, data := range ar.Cells{
+	for _, ar := range article.Rows {
+		for _, data := range ar.Cells {
 			if data.Value == "" {
 				return fmt.Errorf("not a valid table")
-			}else {
+			} else {
 				fmt.Println(data.Value)
 			}
 		}
