@@ -59,9 +59,9 @@ func SaveArticles(articles []entities.Article) {
 		if err == nil {
 			ar.Save()
 		}
-
 	}
 }
+
 func GenerateArticleId(desc string) (string, error) {
 	description := strings.Split(desc, " ")
 	if description[0] != "" {
